@@ -14,8 +14,7 @@ stages:
         inputs:
           workingDir: package.json
           verbose: false
-       
-      - checkout: self
+
       - task: ArchiveFiles@2
         displayName: 'Archive files'
         inputs:
