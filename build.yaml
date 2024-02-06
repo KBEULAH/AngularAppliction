@@ -1,0 +1,26 @@
+stages:
+ - stage: 'build'
+   jobs:
+   - job: 'bulid_npm'
+     steps:
+      - checkout: self 
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'Install Node.js 21.x'
+   
+      - task: Npm@1
+        displayName: 'npm install'
+        inputs:
+          workingDir: package.json
+          verbose: false
+       
+      - checkout: self
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/src/'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
